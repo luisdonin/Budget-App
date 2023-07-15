@@ -18,6 +18,32 @@ let currentExpenses = [];
 let paidExpenses = [];
 let incomes = [];
 
+// Load saved data from local storage
+function loadSavedData() {
+  const savedCurrentExpenses = localStorage.getItem('currentExpenses');
+  const savedPaidExpenses = localStorage.getItem('paidExpenses');
+  const savedIncomes = localStorage.getItem('incomes');
+
+  if (savedCurrentExpenses) {
+    currentExpenses = JSON.parse(savedCurrentExpenses);
+  }
+
+  if (savedPaidExpenses) {
+    paidExpenses = JSON.parse(savedPaidExpenses);
+  }
+
+  if (savedIncomes) {
+    incomes = JSON.parse(savedIncomes);
+  }
+}
+
+// Save data to local storage
+function saveData() {
+  localStorage.setItem('currentExpenses', JSON.stringify(currentExpenses));
+  localStorage.setItem('paidExpenses', JSON.stringify(paidExpenses));
+  localStorage.setItem('incomes', JSON.stringify(incomes));
+}
+
 // Add expense
 addExpenseButton.addEventListener('click', () => {
   const name = expenseName.value;
@@ -37,6 +63,7 @@ addExpenseButton.addEventListener('click', () => {
   currentExpenses.push(expense);
   updateExpenseList();
   updateRequiredIncome();
+  saveData();
 
   expenseName.value = '';
   expenseAmount.value = '';
@@ -60,6 +87,7 @@ addIncomeButton.addEventListener('click', () => {
   incomes.push(income);
   updateIncomeList();
   updateRequiredIncome();
+  saveData();
 
   incomeSource.value = '';
   incomeAmount.value = '';
@@ -80,6 +108,7 @@ function toggleExpenseStatus(index) {
 
   updateExpenseList();
   updateRequiredIncome();
+  saveData();
 }
 
 // Update expense list
@@ -130,6 +159,7 @@ function updateRequiredIncome() {
 }
 
 // Initialize
+loadSavedData();
 updateExpenseList();
 updateIncomeList();
 updateRequiredIncome();
