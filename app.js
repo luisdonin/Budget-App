@@ -163,3 +163,72 @@ loadSavedData();
 updateExpenseList();
 updateIncomeList();
 updateRequiredIncome();
+
+// Get the save data button element
+const saveDataButton = document.getElementById('save-data');
+
+// Event listener for the save data button
+saveDataButton.addEventListener('click', () => {
+  exportDataToSheet();
+  cleanLists();
+});
+
+// Function to export data to a sheet with the current month
+function exportDataToSheet() {
+  const currentDate = new Date();
+  const month = currentDate.getMonth() + 1;
+  const year = currentDate.getFullYear();
+  const filename = `BudgetData_${month}_${year}.csv`;
+
+  // Combine current and paid expenses
+  const allExpenses = currentExpenses.concat(paidExpenses);
+
+  // Calculate the total expenses
+  const totalExpenses = allExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+
+  // Calculate the remaining budget
+  const remainingBudget = incomes.reduce((sum, income) => sum + income.amount, 0) - totalExpenses;
+
+  // Prepare the data for export
+  const data = [
+    ...allExpenses.map(expense => ({ ...expense, status: expense.paid ? 'Paid' : 'Not Paid' })),
+    { name: 'Total Expenses', amount: totalExpenses.toFixed(2), status: '' },
+    { name: 'Remaining Budget', amount: remainingBudget.toFixed(2), status: '' }
+  ];
+
+  // Convert the data to CSV format
+  const csvString = convertDataToCSV(data);
+
+  const downloadLink = document.createElement('a');
+  downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvString);
+  downloadLink.download = filename;
+  downloadLink.click();
+}
+
+// Function to convert data to CSV format
+function convertDataToCSV(data) {
+  const csvRows = [];
+
+  const headers = Object.keys(data[0]);
+  csvRows.push(headers.join(','));
+
+  for (const item of data) {
+    const values = Object.values(item);
+    const row = values.map(value => `"${value}"`);
+    csvRows.push(row.join(','));
+  }
+
+  return csvRows.join('\n');
+}
+
+// Function to clean the expense and income lists
+function cleanLists() {
+  currentExpenses = [];
+  paidExpenses = [];
+  incomes = [];
+
+  updateExpenseList();
+  updateIncomeList();
+  updateRequiredIncome();
+  saveData();
+}
