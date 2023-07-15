@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="heading">Budget App</h1>
+
+    <div id="budget" class="card">
+      <h2 class="card-heading">Expenses</h2>
+
+      <div class="expense-input">
+        <label for="expense-name">Expense Name:</label>
+        <input type="text" id="expense-name" placeholder="Enter expense name">
+      </div>
+
+      <div class="expense-input">
+        <label for="expense-amount">Expense Amount:</label>
+        <input type="number" id="expense-amount" placeholder="Enter expense amount">
+      </div>
+
+      <button id="add-expense" class="button">Add Expense</button>
+
+      <div class="expense-list">
+        <h3 class="list-heading">Current Expenses</h3>
+        <ul id="current-expense-list" class="expense-list-items">
+          <!-- Current expense items will be dynamically added here -->
+        </ul>
+      </div>
+
+      <div class="expense-list">
+        <h3 class="list-heading">Paid Expenses</h3>
+        <ul id="paid-expense-list" class="expense-list-items">
+          <!-- Paid expense items will be dynamically added here -->
+        </ul>
+      </div>
+    </div>
+
+    <div id="monthly-income" class="card">
+      <h2 class="card-heading">Monthly Income</h2>
+
+      <div class="income-input">
+        <label for="income-source">Income Source:</label>
+        <input type="text" id="income-source" placeholder="Enter income source">
+      </div>
+
+      <div class="income-input">
+        <label for="income-amount">Income Amount:</label>
+        <input type="number" id="income-amount" placeholder="Enter income amount">
+      </div>
+
+      <button id="add-income" class="button">Add Income</button>
+
+      <div class="income-list">
+        <h3 class="list-heading">Income List</h3>
+        <ul id="income-list" class="income-list-items">
+          <!-- Income items will be dynamically added here -->
+        </ul>
+      </div>
+
+      <div id="required-income">
+        <h3 class="required-income-heading">Required Income</h3>
+        <div class="income-amounts">
+          <p><span class="income-frequency">Hourly:</span> $<span id="hourly-income-amount">0.00</span></p>
+          <p><span class="income-frequency">Daily:</span> $<span id="daily-income-amount">0.00</span></p>
+          <p><span class="income-frequency">Monthly:</span> $<span id="monthly-income-amount">0.00</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
